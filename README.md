@@ -1,2 +1,2 @@
-dotintall-backbone-todoapp
-==========================
+dotinstall-backbone-todoapp
+===================
