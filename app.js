@@ -7,6 +7,16 @@
     defaults: {
       title: 'do something',
       completed: false
+    },
+    validate: function (attrs) {
+      if (_.isEmpty(attrs.title)) {
+        return 'Title must not be empty';
+      }
+    },
+    initialize: function () {
+      this.on('invalid', function (model, err) {
+        $('#err').html(err);
+      });
     }
   });
 
@@ -78,12 +88,11 @@
 
       e.preventDefault();
 
-      var task = new Task({
-        title: $title.val(),
-        completed: false
-      });
+      var task = new Task();
 
-      this.collection.add(task);
+      if (task.set({ title: $title.val(), completed: false }, { validate: true })) {
+        this.collection.add(task);
+      }
 
       $title.val('');
     }
