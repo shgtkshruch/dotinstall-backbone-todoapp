@@ -105,10 +105,10 @@
 
       if (task.set({ title: $('#title').val(), completed: false }, { validate: true })) {
         this.collection.add(task);
+        $('#err').empty();
       }
     }
   });
-
 
   var tasks = new Tasks([
       { title: 'task1' , completed: true},
