@@ -18,6 +18,20 @@
 
   var TaskView = Backbone.View.extend({
     tagName: 'li',
+    initialize: function () {
+      this.model.on('destroy', this.remove, this);
+    },
+    events: {
+      'click .delete': 'destroy'
+    },
+    destroy: function (e) {
+      if (confirm('Are you sure?')) {
+        this.model.destroy();
+      }
+    },
+    remove: function () {
+      this.$el.remove();
+    },
     template: template,
     render: function () {
       var template = this.template(this.model.toJSON());
