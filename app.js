@@ -10,9 +10,7 @@
     }
   });
 
-  var Tasks = Backbone.Collection.extend({
-    model: Task
-  });
+  var Tasks = Backbone.Collection.extend({ model: Task });
 
   // View
 
@@ -30,7 +28,16 @@
   });
 
   var TaksksView = Backbone.View.extend({
+    tagName: 'ul',
+    render: function () {
+      this.collection.each(function (task) {
+        var taskView = new TaskView({ model: task });
 
+        this.$el.append(taskView.render().el);
+      }.bind(this));
+
+      return this;
+    }
   });
 
   var tasks = new Tasks([
@@ -39,8 +46,7 @@
       { title: 'task3' }
   ]);
 
-  var task = new Task();
-  var tasksView = new TaskView({model: task});
+  var tasksView = new TaksksView({ collection: tasks });
 
   $('#tasks').append(tasksView.render().el);
 
