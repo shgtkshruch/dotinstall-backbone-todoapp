@@ -67,6 +67,8 @@
       var taskView = new TaskView({ model: task });
       this.$el.append(taskView.render().el);
 
+      $('#title').val('').focus();
+
       this.updateCount();
     },
     updateCount: function () {
@@ -97,17 +99,13 @@
       'submit': 'submit'
     },
     submit: function (e) {
-      var $title = $('#title');
-
       e.preventDefault();
 
       var task = new Task();
 
-      if (task.set({ title: $title.val(), completed: false }, { validate: true })) {
+      if (task.set({ title: $('#title').val(), completed: false }, { validate: true })) {
         this.collection.add(task);
       }
-
-      $title.val('');
     }
   });
 
