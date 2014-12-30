@@ -48,6 +48,13 @@
 
   var TaksksView = Backbone.View.extend({
     tagName: 'ul',
+    initialize: function () {
+      this.collection.on('add', this.addNew, this);
+    },
+    addNew: function (task) {
+      var taskView = new TaskView({ model: task });
+      this.$el.append(taskView.render().el);
+    },
     render: function () {
       this.collection.each(function (task) {
         var taskView = new TaskView({ model: task });
@@ -59,6 +66,30 @@
     }
   });
 
+  // form
+
+  var AddTaskView = Backbone.View.extend({
+    el: '#addTask',
+    events: {
+      'submit': 'submit'
+    },
+    submit: function (e) {
+      var $title = $('#title');
+
+      e.preventDefault();
+
+      var task = new Task({
+        title: $title.val(),
+        completed: false
+      });
+
+      this.collection.add(task);
+
+      $title.val('');
+    }
+  });
+
+
   var tasks = new Tasks([
       { title: 'task1' , completed: true},
       { title: 'task2' },
@@ -66,6 +97,7 @@
   ]);
 
   var tasksView = new TaksksView({ collection: tasks });
+  var addTaskView = new AddTaskView({ collection: tasks });
 
   $('#tasks').append(tasksView.render().el);
 
