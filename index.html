@@ -3,6 +3,12 @@
 <head>
  <meta charset="UTF-8">
  <title>Dotinstall Backnode.js ToDo App</title>
+ <style>
+   .completed {
+     text-decoration: line-through;
+     color: gray;
+   }
+ </style>
 </head>
 <body>
 
@@ -10,7 +16,10 @@
   <div id="tasks"></div>
 
   <script type="text/template" id="task-template">
-    <%- title %>
+    <input type="checkbox" class="toggle" <%= completed ? "checked": "" %>>
+    <span class="<%= completed ? 'completed' : ''%>">
+      <%- title %>
+    </span>
     <span class="delete">[x]</span>
   </script>
 

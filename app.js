@@ -20,9 +20,11 @@
     tagName: 'li',
     initialize: function () {
       this.model.on('destroy', this.remove, this);
+      this.model.on('change', this.render, this);
     },
     events: {
-      'click .delete': 'destroy'
+      'click .delete': 'destroy',
+      'click .toggle': 'toggle'
     },
     destroy: function (e) {
       if (confirm('Are you sure?')) {
@@ -31,6 +33,9 @@
     },
     remove: function () {
       this.$el.remove();
+    },
+    toggle: function (e) {
+      this.model.set('completed', !this.model.get('completed'));
     },
     template: template,
     render: function () {
