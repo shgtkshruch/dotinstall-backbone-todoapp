@@ -16,8 +16,17 @@
 
   // View
 
-  var TaskView = Backbone.View.extend({
+  var template = _.template($('#task-template').html());
 
+  var TaskView = Backbone.View.extend({
+    tagName: 'li',
+    template: template,
+    render: function () {
+      var template = this.template(this.model.toJSON());
+      this.$el.html(template);
+
+      return this;
+    }
   });
 
   var TaksksView = Backbone.View.extend({
@@ -29,5 +38,10 @@
       { title: 'task2' },
       { title: 'task3' }
   ]);
+
+  var task = new Task();
+  var tasksView = new TaskView({model: task});
+
+  $('#tasks').append(tasksView.render().el);
 
 }());
